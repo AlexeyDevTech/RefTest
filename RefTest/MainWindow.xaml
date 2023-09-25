@@ -1,0 +1,58 @@
+﻿<Window x:Class="RefTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RefTest"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition />
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <Grid Height="26" Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Height="26" Text="Имя порта: " VerticalAlignment="Center" Padding="0 5"/>
+                        <TextBlock Height="26" Text="{Binding }" VerticalAlignment="Center" Padding="0 5"/>
+                    </Grid>
+                    
+                    <TextBox Height="26" Margin="5" Text="21"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <Button Height="26" Margin="5" Content="Найти"/>
+                    <Button Height="26" Margin="5" Content="Подключить"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                
+            </Grid>
+            <Grid Grid.Row="2">
+                
+            </Grid>
+
+
+        </Grid>
+        <Grid Grid.Column="1">
+
+        </Grid>
+    </Grid>
+    
+    
+    
+</Window>
