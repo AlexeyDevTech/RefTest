@@ -5,19 +5,17 @@
         public ControllerState State { get; private set; }
         public ControllerSettings Settings { get; set; } = new();
         public IBaseSerialDevice ControllerDevice { get; private set; } = new Device();
-
-
+        public Action<ControllerData> OnDataReceivedAction { get; set; }
 
         public Controller()
         {
             State = ControllerState.NotInitialized;
-            
-           
         }
 
-        private void DataReceivedAction(object sender, EventArgs e)
+        private void DataReceivedAction(string message)
         {
-
+            var data = new ControllerData() { Message = message };
+            OnDataReceivedAction?.Invoke(data);
         }
 
         private void ControllerDevice_OnConnected(object? sender, EventArgs e)
@@ -49,10 +47,12 @@
             var device = DeviceConnectHelper.Instance.FindPort(Settings.Request, Settings.Response, Settings.BaudRate);
             if (device != null)
             {
-                ControllerDevice = device;
-                ControllerDevice.DataReceivedAction = DataReceivedAction;
-                device.Connect();
-                r = true;
+                if (device.Connect())
+                {
+                    ControllerDevice = device;
+                    ControllerDevice.DataReceivedAction = DataReceivedAction;
+                    r = true;
+                }
             }
             if (r)
             {
@@ -70,6 +70,8 @@
             ControllerDevice.DataReceivedAction = null;
             ControllerDevice.OnDisconnected -= ControllerDevice_OnDisconnected;
             ControllerDevice.OnConnected -= ControllerDevice_OnConnected;
+
+            State = ControllerState.Stopped;
         }
     }
     public interface IController
@@ -81,9 +83,7 @@
         void Stop();
         bool SetCommand(string command);
 
-
-
-
+        Action<ControllerData> OnDataReceivedAction { get; set; }
     }
 }
 

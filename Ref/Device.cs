@@ -8,11 +8,13 @@ namespace Ref
 
         public event EventHandler OnConnected;
         public event EventHandler OnDisconnected;
-        public Action<object, EventArgs> DataReceivedAction { get; set; }
+        public Action<string> DataReceivedAction { get; set; }
 
         public SerialPort? port { get; set; }
 
         public bool Busy { get; set; }
+
+        public DeviceReadMode ReadMode { get; private set; }
 
         public Device()
         {
@@ -114,23 +116,40 @@ namespace Ref
         }
         public void SetPort(SerialPort? port)
         {
-            this.port = port;
-            port.WriteTimeout = 100;
-            port.ReadTimeout = 100;
-            port.DataReceived += Port_DataReceived;
+            if (port != null)
+            {
+                this.port = port;
+                this.port.WriteTimeout = 100;
+                this.port.ReadTimeout = 100;
+            }
         }
-
-        private void Port_DataReceived(object sender, SerialDataReceivedEventArgs e) => DataReceivedAction?.Invoke(sender, e);
-
         public void SetPort(string portName, int BaudRate = 9600)
         {
             var p = new SerialPort();
             p.PortName = portName;
             p.BaudRate = BaudRate;
+            p.WriteTimeout = 100;
+            p.ReadTimeout = 100;
             port = p;
-            port.DataReceived += Port_DataReceived;
+        }
+        public void SetReadMode(DeviceReadMode mode) => ReadMode = mode;
+
+
+        private void Port_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            var message = string.Empty;
+            if (port != null && port.BytesToRead > 0)
+            {
+                if (ReadMode == DeviceReadMode.Existing)
+                    message = port.ReadExisting();
+                if(ReadMode == DeviceReadMode.Line)
+                    message = port.ReadLine();
+
+                DataReceivedAction?.Invoke(message);
+            }
         }
 
+       
         void ConnectLogic()
         {
             if(port != null)
@@ -143,7 +162,10 @@ namespace Ref
                 port.DataReceived -= Port_DataReceived;
             OnDisconnected?.Invoke(this, new EventArgs());
         }
+
+       
     }
 
 }
+
 

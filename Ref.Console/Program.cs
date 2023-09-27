@@ -4,9 +4,19 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        var refl = new ReflectController();
-        refl.Start();
-        Thread.Sleep(5000);
-        refl.Stop();
+        var main = new MEAController()
+        {
+            Settings = new()
+            {
+                Request = "#LAB?",
+                Response = "AngstremLabController",
+            }
+        };
+        if (main.Start())
+        {
+            Thread.Sleep(10000);
+
+            main.Stop();
+        }
     }
 }
