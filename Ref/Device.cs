@@ -14,7 +14,11 @@ namespace Ref
 
         public bool Busy { get; set; }
 
+
+
         public DeviceReadMode ReadMode { get; private set; }
+
+        public bool IsFinded { get; set; }
 
         public Device()
         {
@@ -36,7 +40,8 @@ namespace Ref
             catch (Exception) { 
                 return false; 
             }
-            ConnectLogic();
+            if(IsFinded)
+                ConnectLogic();
             return true;
         }
         public void Disconnect()
@@ -154,12 +159,14 @@ namespace Ref
         {
             if(port != null)
                 port.DataReceived += Port_DataReceived;
+            IsFinded = true;
             OnConnected?.Invoke(this, new EventArgs());
         }
         void DisconnectLogic()
         {
             if (port != null)
                 port.DataReceived -= Port_DataReceived;
+            IsFinded = false;
             OnDisconnected?.Invoke(this, new EventArgs());
         }
 

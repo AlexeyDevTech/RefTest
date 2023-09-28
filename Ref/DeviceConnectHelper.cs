@@ -46,7 +46,8 @@ namespace Ref
                     {
                         bool Accept = false;
                         int AttemptCount = 3;
-
+                        d.port?.DiscardInBuffer();
+                        d.port?.DiscardOutBuffer();
                         while (AttemptCount > 0 && !Accept)
                         {
                             Console.WriteLine($"Attempts: {AttemptCount}, check.");
@@ -64,11 +65,15 @@ namespace Ref
                             Console.WriteLine();
                         }
                         d.Disconnect();
+                        
                     }
                 }
             }
             if (success)
+            {
+                d.IsFinded = true;
                 return d;
+            }
             else return null;
 
             bool Check()
@@ -77,6 +82,7 @@ namespace Ref
                 try
                 {
                     Console.WriteLine($"<Check> -> Writing [{reqest}]");
+                   
                     if (d.Write(reqest))
                     {
                         Thread.Sleep(50);

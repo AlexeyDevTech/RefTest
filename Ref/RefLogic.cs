@@ -31,8 +31,9 @@ namespace Ref
     {
         bool SetChannel(int channel);
         bool SetMode(int mode);
-
-
+        bool SetImpulse(int impulse);
+        bool SetAmplitude(int vol);
+        void GetState();
 
     }
 

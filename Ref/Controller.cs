@@ -6,6 +6,8 @@
         public ControllerSettings Settings { get; set; } = new();
         public IBaseSerialDevice ControllerDevice { get; private set; } = new Device();
         public Action<ControllerData> OnDataReceivedAction { get; set; }
+        public ChainStates ChainState { get; private set; }
+
 
         public Controller()
         {
@@ -31,10 +33,17 @@
         public bool SetCommand(string command)
         {
             var r = false;
+            
             if (ControllerDevice.Write(command))
             {
                 r = true;
             }
+            return r;
+        }
+
+        public bool SetCommand(string command, string responce, int callbackTimeout = 100)
+        {
+            var r = false;
             return r;
         }
 
@@ -50,7 +59,7 @@
                 if (device.Connect())
                 {
                     ControllerDevice = device;
-                    ControllerDevice.DataReceivedAction = DataReceivedAction;
+                    SetDRA();
                     r = true;
                 }
             }
@@ -67,11 +76,29 @@
         public virtual void Stop()
         {
             ControllerDevice.Disconnect();
-            ControllerDevice.DataReceivedAction = null;
+            UnSetDRA();
             ControllerDevice.OnDisconnected -= ControllerDevice_OnDisconnected;
             ControllerDevice.OnConnected -= ControllerDevice_OnConnected;
 
             State = ControllerState.Stopped;
+        }
+
+        public void SetChain(ChainStates c_state)
+        {
+            ChainState = c_state;
+        }
+
+        public bool ExecuteChain()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SetDRA()
+        {
+            ControllerDevice.DataReceivedAction = DataReceivedAction;
+        }
+        private void UnSetDRA() {
+            ControllerDevice.DataReceivedAction = null;
         }
     }
     public interface IController
@@ -79,11 +106,22 @@
         ControllerState State { get; }
         ControllerSettings Settings { get; set; }
         IBaseSerialDevice ControllerDevice { get; }
+        ChainStates ChainState { get; }
+        MessageCallbackState CallbackState { get; }
         bool Start();
         void Stop();
         bool SetCommand(string command);
+        void SetChain(ChainStates c_state);
+        bool ExecuteChain();
 
         Action<ControllerData> OnDataReceivedAction { get; set; }
+    }
+
+    public enum ChainStates : int
+    {
+        Single = 0,
+        Chain = 1,
+        ChainAuto = 2
     }
 }
 

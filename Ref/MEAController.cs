@@ -143,6 +143,7 @@ namespace Ref
             }
 
             line = receivedData;
+            Message = receivedData;
 
         }
 

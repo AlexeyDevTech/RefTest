@@ -8,13 +8,14 @@ internal class Program
         {
             Settings = new()
             {
-                Request = "#LAB?",
-                Response = "AngstremLabController",
+                Request = "R120#",
+                Response = "R120_OK",
+                BaudRate = 115200
             }
         };
         if (main.Start())
         {
-            Thread.Sleep(10000);
+            Thread.Sleep(1000);
 
             main.Stop();
         }
