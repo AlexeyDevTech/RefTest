@@ -19,13 +19,17 @@ namespace Ref
 
 
 
-    public class ReflectController : Controller
+    public class ReflectController120 : Controller
     {
-        public ReflectController() : base()
+        public ReflectController120() : base()
         {
 
         }
 
+
+    }
+    public class ReflectController90 : Controller
+    {
 
     }
 
