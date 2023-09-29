@@ -36,7 +36,7 @@ namespace Ref
         public bool SetCommand(string command)
         {
             var r = false;
-            
+
             if (ControllerDevice.Write(command))
             {
                 r = true;
@@ -100,7 +100,8 @@ namespace Ref
         {
             ControllerDevice.DataReceivedAction = DataReceivedAction;
         }
-        private void UnSetDRA() {
+        private void UnSetDRA()
+        {
             ControllerDevice.DataReceivedAction = null;
         }
     }

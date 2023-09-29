@@ -13,7 +13,6 @@ namespace Ref.Interfaces
         ControllerSettings Settings { get; set; }
         IBaseSerialDevice ControllerDevice { get; }
         ChainState ChainState { get; }
-        MessageCallbackState CallbackState { get; }
         bool Start();
         void Stop();
         bool SetCommand(string command);
