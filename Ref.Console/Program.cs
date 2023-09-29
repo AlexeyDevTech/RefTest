@@ -1,4 +1,5 @@
 ﻿using Ref;
+using Ref.Controllers;
 
 internal class Program
 {
@@ -8,16 +9,40 @@ internal class Program
         {
             Settings = new()
             {
-                Request = "R120#",
-                Response = "R120_OK",
-                BaudRate = 115200
+                Request = "#LAB?",
+                Response = "AngstremLabController",
+                BaudRate = 9600
             }
         };
-        if (main.Start())
+
+        var MO = new MOController()
         {
-            Thread.Sleep(1000);
+            Settings = new()
+            {
+                Request = "#Get_Packege",
+                Response = "MO",
+                BaudRate = 9600
+            }
+        };
+
+        main.Start();
+        MO.Start();
+
+        for(int i = 0 ; i < 50; i++)
+        {
+            MO.SetCommand("#Get_Packege");
+            Thread.Sleep(100);
+        }
+
+        Console.ReadLine();
+
+        MO.Stop();
+
+        /*if (main.Start())
+        {
+            Thread.Sleep(3000);
 
             main.Stop();
-        }
+        }*/
     }
 }
