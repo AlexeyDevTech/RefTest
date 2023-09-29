@@ -5,7 +5,7 @@ using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ref
+namespace Ref.Controllers
 {
     public class MEAController : Controller
     {
@@ -16,13 +16,13 @@ namespace Ref
 
         private void OnData(ControllerData data)
         {
-            var d = new MEAControllerData(data.Message); 
+            var d = new MEAControllerData(data.Message);
             Console.WriteLine(d.Message);
         }
     }
 
-    public interface IMEAController 
-    { 
+    public interface IMEAController
+    {
 
     }
     public class MEAControllerData : ControllerData
@@ -332,7 +332,7 @@ namespace Ref
             bool res = false;
             try
             {
-                var i = Int32.Parse(value);
+                var i = int.Parse(value);
                 if (i == 0) res = true;
                 else res = false;
             }
@@ -396,19 +396,19 @@ namespace Ref
             switch (step)
             {
                 case 1:
-                    return (cur / coef.BurnCurrentCoef1) * 34;
+                    return cur / coef.BurnCurrentCoef1 * 34;
                 case 2:
-                    return (cur / coef.BurnCurrentCoef2) * 65;
+                    return cur / coef.BurnCurrentCoef2 * 65;
                 case 3:
-                    return (cur / coef.BurnCurrentCoef3) * 130;
+                    return cur / coef.BurnCurrentCoef3 * 130;
                 case 4:
-                    return (cur / coef.BurnCurrentCoef4) * 260;
+                    return cur / coef.BurnCurrentCoef4 * 260;
                 case 5:
-                    return (cur / coef.BurnCurrentCoef5) * 700;
+                    return cur / coef.BurnCurrentCoef5 * 700;
                 case 6:
-                    return (cur / coef.BurnCurrentCoef6) * 2400;
+                    return cur / coef.BurnCurrentCoef6 * 2400;
                 case 7:
-                    return (cur / coef.BurnCurrentCoef7) * 9100;
+                    return cur / coef.BurnCurrentCoef7 * 9100;
                 default:
                     return 0.0;
             }
@@ -421,31 +421,31 @@ namespace Ref
             switch (step)
             {
                 case 1:
-                    res = (Uval - (CurrentBurn * 0.431)) * 68.18;
+                    res = (Uval - CurrentBurn * 0.431) * 68.18;
                     if (res < 0) res = 0.0;
                     return res;
                 case 2:
-                    res = (Uval - (CurrentBurn * 0.431)) * 36.36;
+                    res = (Uval - CurrentBurn * 0.431) * 36.36;
                     if (res < 0) res = 0.0;
                     return res;
                 case 3:
-                    res = (Uval - (CurrentBurn * 0.431)) * 18.18;
+                    res = (Uval - CurrentBurn * 0.431) * 18.18;
                     if (res < 0) res = 0.0;
                     return res;
                 case 4:
-                    res = (Uval - (CurrentBurn * 0.431)) * 9.09;
+                    res = (Uval - CurrentBurn * 0.431) * 9.09;
                     if (res < 0) res = 0.0;
                     return res;
                 case 5:
-                    res = (Uval - (CurrentBurn * 0.788)) * 3.4;
+                    res = (Uval - CurrentBurn * 0.788) * 3.4;
                     if (res < 0) res = 0.0;
                     return res;
                 case 6:
-                    res = Uval - (CurrentBurn * 0.788);
+                    res = Uval - CurrentBurn * 0.788;
                     if (res < 0) res = 0.0;
                     return res;
                 case 7:
-                    res = (Uval - (CurrentBurn * 0.788)) * 0.263;
+                    res = (Uval - CurrentBurn * 0.788) * 0.263;
                     if (res < 0) res = 0.0;
                     return res;
                 default:
@@ -552,7 +552,7 @@ namespace Ref
 
         public GVIErrorInfo(string InputData)
         {
-            var i = Int32.Parse(InputData);
+            var i = int.Parse(InputData);
             if ((i & 0x0001) != 0) ChargerSet = true;               //зарядник не включен
             if ((i & 0x0002) != 0) ChargerReset = true;             //зарядник не выключен
             if ((i & 0x0004) != 0) MeasureSet = true;               //измеритель не включен
@@ -618,7 +618,7 @@ namespace Ref
         public PowerInfo(string InputData)
         {
             uint i = 0;
-            var suc = UInt32.TryParse(InputData, out i);
+            var suc = uint.TryParse(InputData, out i);
             if (suc)
             {
                 if ((i & 0x01) != 0) VoltageUpFlag = true;
@@ -761,7 +761,7 @@ namespace Ref
         }
         public MKZStateInfo(string InputData)
         {
-            var i = Int32.Parse(InputData);
+            var i = int.Parse(InputData);
             if ((i & 0x01) != 0) Stop = true;
             if ((i & 0x02) != 0) SafeKey = true;
             if ((i & 0x04) != 0) DangerousPotencial = true;

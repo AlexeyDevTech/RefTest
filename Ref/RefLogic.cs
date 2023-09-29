@@ -27,16 +27,6 @@ namespace Ref
 
     }
 
-    public interface IReflectController
-    {
-        bool SetChannel(int channel);
-        bool SetMode(int mode);
-        bool SetImpulse(int impulse);
-        bool SetAmplitude(int vol);
-        void GetState();
-
-    }
-
     public class ReflectChannelSettings
     {
         

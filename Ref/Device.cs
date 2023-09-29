@@ -1,4 +1,5 @@
 ﻿using System.IO.Ports;
+using Ref.Interfaces;
 
 namespace Ref
 {

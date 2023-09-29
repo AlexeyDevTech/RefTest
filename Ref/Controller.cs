@@ -1,4 +1,7 @@
-﻿namespace Ref
+﻿using Ref.Enums;
+using Ref.Interfaces;
+
+namespace Ref
 {
     public class Controller : IController
     {
@@ -6,7 +9,7 @@
         public ControllerSettings Settings { get; set; } = new();
         public IBaseSerialDevice ControllerDevice { get; private set; } = new Device();
         public Action<ControllerData> OnDataReceivedAction { get; set; }
-        public ChainStates ChainState { get; private set; }
+        public ChainState ChainState { get; private set; }
 
 
         public Controller()
@@ -83,7 +86,7 @@
             State = ControllerState.Stopped;
         }
 
-        public void SetChain(ChainStates c_state)
+        public void SetChain(ChainState c_state)
         {
             ChainState = c_state;
         }
@@ -101,27 +104,6 @@
             ControllerDevice.DataReceivedAction = null;
         }
     }
-    public interface IController
-    {
-        ControllerState State { get; }
-        ControllerSettings Settings { get; set; }
-        IBaseSerialDevice ControllerDevice { get; }
-        ChainStates ChainState { get; }
-        MessageCallbackState CallbackState { get; }
-        bool Start();
-        void Stop();
-        bool SetCommand(string command);
-        void SetChain(ChainStates c_state);
-        bool ExecuteChain();
 
-        Action<ControllerData> OnDataReceivedAction { get; set; }
-    }
-
-    public enum ChainStates : int
-    {
-        Single = 0,
-        Chain = 1,
-        ChainAuto = 2
-    }
 }
 
