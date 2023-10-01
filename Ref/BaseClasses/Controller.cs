@@ -1,7 +1,8 @@
 ﻿using Ref.Enums;
+using Ref.Helpers;
 using Ref.Interfaces;
 
-namespace Ref
+namespace Ref.BaseClasses
 {
     public class Controller : IController
     {

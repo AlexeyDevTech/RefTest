@@ -1,7 +1,7 @@
 ﻿using System.IO.Ports;
 using Ref.Interfaces;
 
-namespace Ref
+namespace Ref.BaseClasses
 {
     public class Device : IBaseSerialDevice
     {
@@ -35,13 +35,14 @@ namespace Ref
                 if (port.IsOpen) return false;
                 port.Open();
                 Thread.Sleep(20);
-                if(!port.IsOpen) return false;
+                if (!port.IsOpen) return false;
 
             }
-            catch (Exception) { 
-                return false; 
+            catch (Exception)
+            {
+                return false;
             }
-            if(IsFinded)
+            if (IsFinded)
                 ConnectLogic();
             return true;
         }
@@ -66,21 +67,21 @@ namespace Ref
             {
                 Busy = true;
                 port.Write(message);
-            } 
-            catch(InvalidOperationException)
+            }
+            catch (InvalidOperationException)
             {
                 Disconnect();
                 return false;
             }
-            catch(TimeoutException)
+            catch (TimeoutException)
             {
                 return false;
             }
             catch (Exception) { return false; }
 
-            finally 
-            { 
-                Busy = false; 
+            finally
+            {
+                Busy = false;
             }
             Busy = false;
 
@@ -148,17 +149,17 @@ namespace Ref
             {
                 if (ReadMode == DeviceReadMode.Existing)
                     message = port.ReadExisting();
-                if(ReadMode == DeviceReadMode.Line)
+                if (ReadMode == DeviceReadMode.Line)
                     message = port.ReadLine();
 
                 DataReceivedAction?.Invoke(message);
             }
         }
 
-       
+
         void ConnectLogic()
         {
-            if(port != null)
+            if (port != null)
                 port.DataReceived += Port_DataReceived;
             IsFinded = true;
             OnConnected?.Invoke(this, new EventArgs());
@@ -171,7 +172,7 @@ namespace Ref
             OnDisconnected?.Invoke(this, new EventArgs());
         }
 
-       
+
     }
 
 }

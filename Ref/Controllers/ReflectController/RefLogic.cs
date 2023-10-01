@@ -5,14 +5,15 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using Ref.BaseClasses;
 
-namespace Ref
+namespace Ref.Controllers.ReflectController
 {
     public class RefLogic
     {
         public RefLogic()
         {
-            
+
         }
     }
 
@@ -31,10 +32,10 @@ namespace Ref
 
     public class ReflectChannelSettings
     {
-        
+
     }
-   
-   
-   
+
+
+
 }
 

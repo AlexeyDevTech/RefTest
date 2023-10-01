@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Ref
+namespace Ref.Controllers.ReflectController
 {
     public struct ReflectOutput
     {

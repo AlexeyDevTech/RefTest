@@ -1,5 +1,6 @@
 ﻿using Ref;
 using Ref.Controllers;
+using Ref.Controllers.MainController;
 
 internal class Program
 {
@@ -14,29 +15,9 @@ internal class Program
                 BaudRate = 9600
             }
         };
-
-        var MO = new MOController()
-        {
-            Settings = new()
-            {
-                Request = "#Get_Packege",
-                Response = "MO",
-                BaudRate = 9600
-            }
-        };
-
         main.Start();
-        MO.Start();
-
-        for(int i = 0 ; i < 50; i++)
-        {
-            MO.SetCommand("#Get_Packege");
-            Thread.Sleep(100);
-        }
 
         Console.ReadLine();
-
-        MO.Stop();
 
         /*if (main.Start())
         {

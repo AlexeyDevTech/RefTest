@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
+using Ref.BaseClasses;
 
-namespace Ref
+namespace Ref.Controllers.ReflectController
 {
     internal class OSCController
     {
@@ -116,6 +117,6 @@ namespace Ref
             NativeMethods.SetVoltDivDLL(voidDivIndex);
         }
     }
-   
+
 }
 

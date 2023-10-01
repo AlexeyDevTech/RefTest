@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Ref
+namespace Ref.Controllers.ReflectController
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct ReflectDataStruct
@@ -26,6 +26,6 @@ namespace Ref
             return !(left == right);
         }
     }
-   
+
 }
 
