@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Ref
+namespace Ref.BaseClasses
 {
     internal static class NativeMethods
     {

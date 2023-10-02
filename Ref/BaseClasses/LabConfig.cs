@@ -5,11 +5,12 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using static Ref.Config.ExternalSoftwareParams.Mods;
+using static Ref.BaseClasses.Config.ExternalSoftwareParams.Mods;
 using System.Xml.Linq;
 using Newtonsoft.Json;
+using Ref.Controllers.MainController;
 
-namespace Ref
+namespace Ref.BaseClasses
 {
     public delegate void FazeTypeChanged(FazeType fazeType);
     public delegate void ThermoVisionChanged(bool ThermoVision);

@@ -1,4 +1,4 @@
-﻿namespace Ref
+﻿namespace Ref.Enums
 {
     public enum ControllerState : int
     {

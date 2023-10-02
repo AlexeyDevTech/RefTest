@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
 
-namespace Ref
+namespace Ref.Controllers.ReflectController
 {
 
     public delegate void ReflectModeChangedEventHandler(ReflectMode mode);

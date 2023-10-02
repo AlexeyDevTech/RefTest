@@ -1,6 +1,7 @@
 ﻿using System.IO.Ports;
+using Ref.BaseClasses;
 
-namespace Ref
+namespace Ref.Helpers
 {
     public class DeviceConnectHelper
     {
@@ -8,14 +9,14 @@ namespace Ref
         public static DeviceConnectHelper Instance { get; set; } = new();
         private DeviceConnectHelper()
         {
-            
+
         }
 
         public List<SerialPort> GetPortList()
         {
             var ports = new List<SerialPort>();
             var p = SerialPort.GetPortNames();
-            foreach(var d in p)
+            foreach (var d in p)
             {
                 var s = new SerialPort(d);
                 ports.Add(s);
@@ -65,7 +66,7 @@ namespace Ref
                             Console.WriteLine();
                         }
                         d.Disconnect();
-                        
+
                     }
                 }
             }
@@ -82,7 +83,7 @@ namespace Ref
                 try
                 {
                     Console.WriteLine($"<Check> -> Writing [{reqest}]");
-                   
+
                     if (d.Write(reqest))
                     {
                         Thread.Sleep(50);

@@ -5,14 +5,15 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using Ref.BaseClasses;
 
-namespace Ref
+namespace Ref.Controllers.ReflectController
 {
     public class RefLogic
     {
         public RefLogic()
         {
-            
+
         }
     }
 
@@ -33,22 +34,12 @@ namespace Ref
 
     }
 
-    public interface IReflectController
-    {
-        bool SetChannel(int channel);
-        bool SetMode(int mode);
-        bool SetImpulse(int impulse);
-        bool SetAmplitude(int vol);
-        void GetState();
-
-    }
-
     public class ReflectChannelSettings
     {
-        
+
     }
-   
-   
-   
+
+
+
 }
 

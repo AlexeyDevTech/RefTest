@@ -1,4 +1,4 @@
-﻿namespace Ref
+﻿namespace Ref.Interfaces
 {
     public interface IBaseDevice
     {

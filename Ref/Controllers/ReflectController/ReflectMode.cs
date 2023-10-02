@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Ref
+namespace Ref.Controllers.ReflectController
 {
     public enum ReflectMode : int
     {
@@ -11,6 +11,6 @@ namespace Ref
         [Description("Ждущий")]
         Continuous = 2
     }
-   
+
 }
 

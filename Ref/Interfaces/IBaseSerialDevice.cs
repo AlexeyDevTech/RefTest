@@ -1,9 +1,9 @@
 ﻿using System.IO.Ports;
 
-namespace Ref
+namespace Ref.Interfaces
 {
     public interface IBaseSerialDevice : IBaseDevice
-    {   
+    {
         SerialPort? port { get; }
         bool IsFinded { get; set; }
         void SetPort(SerialPort? port);

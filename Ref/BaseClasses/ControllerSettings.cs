@@ -1,4 +1,4 @@
-﻿namespace Ref
+﻿namespace Ref.BaseClasses
 {
     public class ControllerSettings
     {

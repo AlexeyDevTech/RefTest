@@ -1,4 +1,8 @@
-﻿namespace Ref
+﻿using Ref.Enums;
+using Ref.Helpers;
+using Ref.Interfaces;
+
+namespace Ref.BaseClasses
 {
     public class Controller : IController
     {
@@ -6,8 +10,9 @@
         public ControllerSettings Settings { get; set; } = new();
         public IBaseSerialDevice ControllerDevice { get; private set; } = new Device();
         public Action<ControllerData> OnDataReceivedAction { get; set; }
-        public ChainStates ChainState { get; private set; }
+        public ChainState ChainState { get; private set; }
 
+        private List<string> ChainCommands = new();
 
         public Controller()
         {
@@ -33,7 +38,7 @@
         public bool SetCommand(string command)
         {
             var r = false;
-            
+
             if (ControllerDevice.Write(command))
             {
                 r = true;
@@ -46,9 +51,6 @@
             var r = false;
             return r;
         }
-
-
-
 
         public virtual bool Start()
         {
@@ -83,44 +85,41 @@
             State = ControllerState.Stopped;
         }
 
-        public void SetChain(ChainStates c_state)
+        public void SetChain(ChainState c_state)
         {
             ChainState = c_state;
         }
 
         public bool ExecuteChain()
         {
-            throw new NotImplementedException();
+            if (ChainState == ChainState.Single) throw new Exception("Selected not correct state of chain");
+
+            var res = true;
+
+            foreach (var command in ChainCommands)
+            {
+                if (!SetCommand(command))
+                {
+                    res = false;
+                    break;
+                }
+            }
+
+            ChainCommands.Clear();
+            if (ChainState == ChainState.ChainAuto) SetChain(ChainState.Single);
+
+            return res;
         }
 
         private void SetDRA()
         {
             ControllerDevice.DataReceivedAction = DataReceivedAction;
         }
-        private void UnSetDRA() {
+        private void UnSetDRA()
+        {
             ControllerDevice.DataReceivedAction = null;
         }
     }
-    public interface IController
-    {
-        ControllerState State { get; }
-        ControllerSettings Settings { get; set; }
-        IBaseSerialDevice ControllerDevice { get; }
-        ChainStates ChainState { get; }
-        bool Start();
-        void Stop();
-        bool SetCommand(string command);
-        void SetChain(ChainStates c_state);
-        bool ExecuteChain();
 
-        Action<ControllerData> OnDataReceivedAction { get; set; }
-    }
-
-    public enum ChainStates : int
-    {
-        Single = 0,
-        Chain = 1,
-        ChainAuto = 2
-    }
 }
 

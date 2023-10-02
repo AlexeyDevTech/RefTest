@@ -1,4 +1,4 @@
-﻿namespace Ref
+﻿namespace Ref.Controllers.ReflectController
 {
     public static class CalculatorDDS
     {
@@ -40,7 +40,7 @@
             get
             {
                 var freqD = F;
-                var len = (int)((L * 2 * K * freqD) / (3 * Math.Pow(10, 8)));
+                var len = (int)(L * 2 * K * freqD / (3 * Math.Pow(10, 8)));
                 if (len == 0 || len > 65535)
                 {
                     len = 65535;
@@ -83,9 +83,9 @@
         }
         public static double FDDS => 1 / TauDDS.TranslateTo(TauUnitMetric.s);
         private static double T1 => TauDDS.TranslateTo(TauUnitMetric.s) / RS;
-        public static double M => (DZI / Math.Pow(10, 9)) / T1 < 1 ? 1 : (DZI / Math.Pow(10, 9)) / T1;
+        public static double M => DZI / Math.Pow(10, 9) / T1 < 1 ? 1 : DZI / Math.Pow(10, 9) / T1;
 
     }
-   
+
 }
 

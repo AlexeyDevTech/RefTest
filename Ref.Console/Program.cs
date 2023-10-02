@@ -1,4 +1,6 @@
 ﻿using Ref;
+using Ref.Controllers;
+using Ref.Controllers.MainController;
 
 internal class Program
 {
@@ -8,16 +10,20 @@ internal class Program
         {
             Settings = new()
             {
-                Request = "R120#",
-                Response = "R120_OK",
-                BaudRate = 115200
+                Request = "#LAB?",
+                Response = "AngstremLabController",
+                BaudRate = 9600
             }
         };
-        if (main.Start())
+        main.Start();
+
+        Console.ReadLine();
+
+        /*if (main.Start())
         {
-            Thread.Sleep(1000);
+            Thread.Sleep(3000);
 
             main.Stop();
-        }
+        }*/
     }
 }
