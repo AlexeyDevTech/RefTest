@@ -12,7 +12,7 @@ namespace Ref.BaseClasses
         public Action<ControllerData> OnDataReceivedAction { get; set; }
         public ChainState ChainState { get; private set; }
 
-        private List<string> ChainCommands = new();
+        private Queue<string> ChainCommands = new();
 
         public Controller()
         {
@@ -38,9 +38,16 @@ namespace Ref.BaseClasses
         public bool SetCommand(string command)
         {
             var r = false;
-
-            if (ControllerDevice.Write(command))
+            if (ChainState == ChainState.Single)
             {
+                if (ControllerDevice.Write(command))
+                {
+                    r = true;
+                }
+            }
+            else
+            {
+                ChainCommands.Enqueue(command);
                 r = true;
             }
             return r;
@@ -96,18 +103,17 @@ namespace Ref.BaseClasses
 
             var res = true;
 
-            foreach (var command in ChainCommands)
+            while (ChainCommands.Count > 0)
             {
-                if (!SetCommand(command))
+                if (!ControllerDevice.Write(ChainCommands.Peek()))
                 {
                     res = false;
                     break;
                 }
+                else ChainCommands.Dequeue();
             }
-
-            ChainCommands.Clear();
             if (ChainState == ChainState.ChainAuto) SetChain(ChainState.Single);
-
+            ChainCommands.Clear();
             return res;
         }
 

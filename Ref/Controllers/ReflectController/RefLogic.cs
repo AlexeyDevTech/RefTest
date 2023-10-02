@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Ref.BaseClasses;
+using Ref.Interfaces;
 
 namespace Ref.Controllers.ReflectController
 {
@@ -29,16 +30,39 @@ namespace Ref.Controllers.ReflectController
 
 
     }
-    public class ReflectController90 : Controller
+    public class ReflectController90 : Controller, IReflectController
     {
 
+
+        public void GetState()
+        {
+        }
+
+        public bool SetAmplitude(int vol)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SetChannel(int channel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SetImpulse(int impulse)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SetMode(int mode)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class ReflectChannelSettings
     {
 
     }
-
 
 
 }
