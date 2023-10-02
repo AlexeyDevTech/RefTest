@@ -5,36 +5,50 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using Ref.BaseClasses;
 
-namespace Ref.Controllers.ReflectController
+namespace Ref
 {
     public class RefLogic
     {
         public RefLogic()
         {
-
+            
         }
     }
 
 
 
 
-    public class ReflectController : Controller
+    public class ReflectController120 : Controller
     {
-        public ReflectController() : base()
+        public ReflectController120() : base()
         {
 
         }
 
 
     }
-
-    public class ReflectChannelSettings
+    public class ReflectController90 : Controller
     {
 
     }
 
+    public interface IReflectController
+    {
+        bool SetChannel(int channel);
+        bool SetMode(int mode);
+        bool SetImpulse(int impulse);
+        bool SetAmplitude(int vol);
+        void GetState();
 
+    }
 
+    public class ReflectChannelSettings
+    {
+        
+    }
+   
+   
+   
 }
+
