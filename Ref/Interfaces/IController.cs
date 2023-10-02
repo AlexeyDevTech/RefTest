@@ -17,6 +17,7 @@ namespace Ref.Interfaces
         bool Start();
         void Stop();
         bool SetCommand(string command);
+        bool SetCommand(string command, string responce, int callbackTimeout = 100);
         void SetChain(ChainState c_state);
         bool ExecuteChain();
 

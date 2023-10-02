@@ -12,6 +12,7 @@ namespace Ref.BaseClasses
         public Action<ControllerData> OnDataReceivedAction { get; set; }
         public ChainState ChainState { get; private set; }
 
+        private List<string> ChainCommands = new();
 
         public Controller()
         {
@@ -50,9 +51,6 @@ namespace Ref.BaseClasses
             var r = false;
             return r;
         }
-
-
-
 
         public virtual bool Start()
         {
@@ -94,7 +92,23 @@ namespace Ref.BaseClasses
 
         public bool ExecuteChain()
         {
-            throw new NotImplementedException();
+            if (ChainState == ChainState.Single) throw new Exception("Selected not correct state of chain");
+
+            var res = true;
+
+            foreach (var command in ChainCommands)
+            {
+                if (!SetCommand(command))
+                {
+                    res = false;
+                    break;
+                }
+            }
+
+            ChainCommands.Clear();
+            if (ChainState == ChainState.ChainAuto) SetChain(ChainState.Single);
+
+            return res;
         }
 
         private void SetDRA()
