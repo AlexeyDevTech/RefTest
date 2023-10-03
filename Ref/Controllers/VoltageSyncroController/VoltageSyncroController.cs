@@ -16,9 +16,10 @@ namespace Ref.Controllers.VoltageSyncroController
             OnDataReceivedAction = OnData;   
         }
         
-        public void GetMode()
+        public void GetVoltage()
         {
-            var command = new StandartCommand(this, "#GET_VOLTAGE");
+            //var command = new StandartCommand(this, "#GET_VOLTAGE");
+            var command = new ReqResCommand(this, "#GET_VOLTAGE", "RNSVOL");
             SetCommand(command).ExecuteCommand();
         }
 

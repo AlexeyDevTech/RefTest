@@ -57,7 +57,33 @@ namespace Ref.BaseClasses
         public bool WriteCommand(string command, string responce, int callbackTimeout = 100)
         {
             var r = false;
+            var waitHandle = new ManualResetEvent(false);
+
+
+            if (ChainState == ChainState.Single)
+            {
+                ControllerDevice.DataReceivedAction += HandleResponse;
+                ControllerDevice.Write(command);
+            }
+            else
+            {
+                ChainCommands.Enqueue(command);
+                r = true;
+            }
+
+            waitHandle.WaitOne(callbackTimeout);
+
             return r;
+
+            void HandleResponse(string message)
+            {
+                if (message.Contains(responce))
+                {
+                    r = true;
+                }
+                ControllerDevice.DataReceivedAction -= HandleResponse;
+            }
+
         }
 
         public virtual bool Start()

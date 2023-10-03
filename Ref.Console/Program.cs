@@ -18,9 +18,9 @@ internal class Program
         };
         voltageSyncroOperator.Start();
 
-        Thread.Sleep(5000);
+        Thread.Sleep(3000);
 
-        voltageSyncroOperator.GetMode();
+        voltageSyncroOperator.GetVoltage();
 
 
         Console.ReadLine();
