@@ -64,14 +64,17 @@ namespace Ref.BaseClasses
             {
                 ControllerDevice.DataReceivedAction += HandleResponse;
                 ControllerDevice.Write(command);
+
+                waitHandle.WaitOne(callbackTimeout);
+
+                ControllerDevice.DataReceivedAction -= HandleResponse;
+
             }
             else
             {
                 ChainCommands.Enqueue(command);
                 r = true;
             }
-
-            waitHandle.WaitOne(callbackTimeout);
 
             return r;
 
@@ -80,8 +83,8 @@ namespace Ref.BaseClasses
                 if (message.Contains(responce))
                 {
                     r = true;
+                    waitHandle.Set();
                 }
-                ControllerDevice.DataReceivedAction -= HandleResponse;
             }
 
         }
