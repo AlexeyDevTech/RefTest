@@ -1,29 +1,29 @@
 ﻿using Ref;
 using Ref.Controllers;
 using Ref.Controllers.MainController;
+using Ref.Controllers.VoltageSyncroController;
 
 internal class Program
 {
     private static void Main(string[] args)
     {
-        var main = new MEAController()
+        var voltageSyncroOperator = new VoltageSyncroController()
         {
             Settings = new()
             {
                 Request = "#LAB?",
-                Response = "AngstremLabController",
+                Response = "Voltage Regulator Synchronizer",
                 BaudRate = 9600
             }
         };
-        main.Start();
+        voltageSyncroOperator.Start();
+
+        Thread.Sleep(5000);
+
+        voltageSyncroOperator.GetMode();
+
 
         Console.ReadLine();
 
-        /*if (main.Start())
-        {
-            Thread.Sleep(3000);
-
-            main.Stop();
-        }*/
     }
 }

@@ -1,10 +1,11 @@
-﻿using Ref.Enums;
+﻿using Ref.BaseClasses.Commands;
+using Ref.Enums;
 using Ref.Helpers;
 using Ref.Interfaces;
 
 namespace Ref.BaseClasses
 {
-    public class Controller : IController
+    public class Controller : Invoker, IController
     {
         public ControllerState State { get; private set; }
         public ControllerSettings Settings { get; set; } = new();
@@ -35,7 +36,7 @@ namespace Ref.BaseClasses
             //post-action
         }
 
-        public bool SetCommand(string command)
+        public bool WriteCommand(string command)
         {
             var r = false;
             if (ChainState == ChainState.Single)
@@ -53,7 +54,7 @@ namespace Ref.BaseClasses
             return r;
         }
 
-        public bool SetCommand(string command, string responce, int callbackTimeout = 100)
+        public bool WriteCommand(string command, string responce, int callbackTimeout = 100)
         {
             var r = false;
             return r;
