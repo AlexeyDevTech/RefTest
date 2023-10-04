@@ -14,10 +14,9 @@ namespace Ref.BaseClasses.Commands
             command = c;
             return this;
         }
-        public Invoker ExecuteCommand()
+        public bool ExecuteCommand()
         {
-            command.Execute();
-            return this;
+            return command.Execute();
         }
         public Invoker CancelCommand()
         {

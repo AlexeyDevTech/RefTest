@@ -20,7 +20,7 @@ namespace Ref.Controllers.VoltageSyncroController
         {
             //var command = new StandartCommand(this, "#GET_VOLTAGE");
             var command = new ReqResCommand(this, "#GET_VOLTAGE", "RNSVOL");
-            SetCommand(command).ExecuteCommand();
+            var res = SetCommand(command).ExecuteCommand();
         }
 
         private void OnData(ControllerData data)
