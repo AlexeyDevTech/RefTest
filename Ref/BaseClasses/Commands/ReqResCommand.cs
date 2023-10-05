@@ -8,32 +8,25 @@ namespace Ref.BaseClasses.Commands
 {
     public class ReqResCommand : CommandBase
     {
-        private string command;
-        private string response;
-        private int timeout = 0;
-        private Controller reciever;
-        public ReqResCommand(Controller Reciever, string Command, string Response)
+        public string Response { get; set; } = string.Empty;
+        public int Timeout { get; set; }
+        public ReqResCommand(string Command) : base(Command)
         {
-            reciever = Reciever;
-            command = Command;
-            response = Response;
-        }
-        public ReqResCommand(Controller Reciever, string Command, string Response, int callBackTimeout)
-        {
-            reciever = Reciever;
-            command = Command;
-            response = Response;
-            timeout = callBackTimeout;
-        }
-        public override bool Execute()
-        {
-            if(timeout==0) return reciever.WriteCommand(command, response);
-            else return reciever.WriteCommand(command, response, timeout);
+
         }
 
-        public override bool Undo()
+
+    }
+    public class ReqResFailCallbackCommand : CommandBase
+    {
+        public string Response { get; set; } = string.Empty;
+        public string FailResponse { get; set; } = string.Empty;
+
+
+        public int Timeout { get; set; }
+        public ReqResFailCallbackCommand(string Command) : base(Command)
         {
-            return false;
         }
     }
+
 }

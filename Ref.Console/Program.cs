@@ -1,27 +1,13 @@
 ﻿using Ref;
+using Ref.BaseClasses;
 using Ref.Controllers;
 using Ref.Controllers.MainController;
 using Ref.Controllers.VoltageSyncroController;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
-        var voltageSyncroOperator = new VoltageSyncroController()
-        {
-            Settings = new()
-            {
-                Request = "#LAB?",
-                Response = "Voltage Regulator Synchronizer",
-                BaudRate = 9600
-            }
-        };
-        voltageSyncroOperator.Start();
-
-        Thread.Sleep(3000);
-
-        voltageSyncroOperator.GetVoltage();
-
 
         Console.ReadLine();
 

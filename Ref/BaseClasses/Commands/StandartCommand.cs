@@ -6,24 +6,11 @@ using System.Threading.Tasks;
 
 namespace Ref.BaseClasses.Commands
 {
-    public class StandartCommand : CommandBase
-    {
-        private string command;
-        private Controller reciever;
-        public StandartCommand(Controller Reciever, string Command)
+    public class StandardCommand : CommandBase
+    { 
+        public StandardCommand(string Command) : base(Command)
         {
-            reciever = Reciever;
-            command = Command;
-        }
 
-        public override bool Execute()
-        {
-            return reciever.WriteCommand(command);
-        }
-
-        public override bool Undo()
-        {
-            return false;
         }
     }
 }

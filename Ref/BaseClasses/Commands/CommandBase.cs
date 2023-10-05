@@ -8,7 +8,10 @@ namespace Ref.BaseClasses.Commands
 {
     public abstract class CommandBase
     {
-        public abstract bool Execute();
-        public abstract bool Undo();
+        public string Command { get; set; } = string.Empty;
+        public CommandBase(string Command)
+        {
+            this.Command = Command;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Ref.BaseClasses;
+using Ref.BaseClasses.Commands;
 using Ref.Enums;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,10 @@ namespace Ref.Interfaces
         ChainState ChainState { get; }
         bool Start();
         void Stop();
-        bool WriteCommand(string command);
-        bool WriteCommand(string command, string responce, int callbackTimeout = 100);
+        Task<bool> WriteCommand(StandardCommand command);
+        Task<bool> WriteCommand(ReqResCommand command);
         void SetChain(ChainState c_state);
-        bool ExecuteChain();
+        Task<bool> ExecuteChain();
 
         Action<ControllerData> OnDataReceivedAction { get; set; }
     }

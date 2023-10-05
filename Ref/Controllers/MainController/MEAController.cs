@@ -19,8 +19,7 @@ namespace Ref.Controllers.MainController
         //example
         void PowerOnOff()
         {
-            var command = new StandartCommand(this, "#POWERUP");
-            SetCommand(command).ExecuteCommand();
+
         }
 
         private void OnData(ControllerData data)

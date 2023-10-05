@@ -140,8 +140,6 @@ namespace Ref.BaseClasses
             port = p;
         }
         public void SetReadMode(DeviceReadMode mode) => ReadMode = mode;
-
-
         private void Port_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             var message = string.Empty;

@@ -5,7 +5,7 @@ using Ref.Interfaces;
 
 namespace Ref.BaseClasses
 {
-    public class Controller : Invoker, IController
+    public class Controller : IController
     {
         public ControllerState State { get; private set; }
         public ControllerSettings Settings { get; set; } = new();
@@ -13,7 +13,7 @@ namespace Ref.BaseClasses
         public Action<ControllerData> OnDataReceivedAction { get; set; }
         public ChainState ChainState { get; private set; }
 
-        private Queue<string> ChainCommands = new();
+        private Queue<CommandBase> ChainCommands = new();
 
         public Controller()
         {
@@ -23,6 +23,7 @@ namespace Ref.BaseClasses
         private void DataReceivedAction(string message)
         {
             var data = new ControllerData() { Message = message };
+            Console.WriteLine(data.Message);
             OnDataReceivedAction?.Invoke(data);
         }
 
@@ -36,59 +37,117 @@ namespace Ref.BaseClasses
             //post-action
         }
 
-        public bool WriteCommand(string command)
+        //public bool WriteCommand(string command)
+        //{
+        //    var r = false;
+        //    if (ChainState == ChainState.Single)
+        //    {
+        //        if (ControllerDevice.Write(command))
+        //        {
+        //            r = true;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        ChainCommands.Enqueue(command);
+        //        r = true;
+        //    }
+        //    return r;
+        //}
+
+
+        //public bool WriteCommand(string command, string responce, int callbackTimeout = 100)
+        //{
+        //    var r = false;
+        //    var waitHandle = new ManualResetEvent(false);
+
+
+        //    if (ChainState == ChainState.Single)
+        //    {
+        //        ControllerDevice.DataReceivedAction += HandleResponse;
+        //        ControllerDevice.Write(command);
+
+        //        waitHandle.WaitOne(callbackTimeout);
+
+        //        ControllerDevice.DataReceivedAction -= HandleResponse;
+
+        //    }
+        //    else
+        //    {
+        //        ChainCommands.Enqueue(command);
+        //        r = true;
+        //    }
+        //    waitHandle.Dispose();
+        //    return r;
+
+        //    void HandleResponse(string message)
+        //    {
+        //        if (message.Contains(responce))
+        //        {
+        //            r = true;
+        //            waitHandle.Set();
+        //        }
+        //    }
+
+        //}
+        public  Task<bool> WriteCommand(StandardCommand command)
         {
-            var r = false;
-            if (ChainState == ChainState.Single)
+            return Task.Run(() =>
             {
-                if (ControllerDevice.Write(command))
+
+                var r = false;
+                if (ChainState == ChainState.Single)
                 {
+                    if (ControllerDevice.Write(command.Command))
+                    {
+                        r = true;
+                    }
+                }
+                else
+                {
+                    ChainCommands.Enqueue(command);
                     r = true;
                 }
-            }
-            else
-            {
-                ChainCommands.Enqueue(command);
-                r = true;
-            }
-            return r;
+                return r;
+            });
         }
-
-        public bool WriteCommand(string command, string responce, int callbackTimeout = 100)
+        public Task<bool> WriteCommand(ReqResCommand command)
         {
-            var r = false;
-            var waitHandle = new ManualResetEvent(false);
+            return Task.Run(() => {
+                var r = false;
+                var waitHandle = new ManualResetEvent(false);
 
 
-            if (ChainState == ChainState.Single)
-            {
-                ControllerDevice.DataReceivedAction += HandleResponse;
-                ControllerDevice.Write(command);
-
-                waitHandle.WaitOne(callbackTimeout);
-
-                ControllerDevice.DataReceivedAction -= HandleResponse;
-
-            }
-            else
-            {
-                ChainCommands.Enqueue(command);
-                r = true;
-            }
-
-            return r;
-
-            void HandleResponse(string message)
-            {
-                if (message.Contains(responce))
+                if (ChainState == ChainState.Single)
                 {
-                    r = true;
-                    waitHandle.Set();
+                    ControllerDevice.DataReceivedAction += HandleResponse;
+                    ControllerDevice.Write(command.Command);
+
+                    waitHandle.WaitOne(command.Timeout);
+
+                    ControllerDevice.DataReceivedAction -= HandleResponse;
+
                 }
-            }
+                else
+                {
+                    ChainCommands.Enqueue(command);
+                    r = true;
+                }
+                waitHandle.Dispose();
+                return r;
+
+                void HandleResponse(string message)
+                {
+                    if (message.Contains(command.Response))
+                    {
+                        r = true;
+                        waitHandle.Set();
+                    }
+                }
+            });
+            
 
         }
-
         public virtual bool Start()
         {
             var r = false;
@@ -127,20 +186,28 @@ namespace Ref.BaseClasses
             ChainState = c_state;
         }
 
-        public bool ExecuteChain()
+        public async Task<bool> ExecuteChain()
         {
             if (ChainState == ChainState.Single) throw new Exception("Selected not correct state of chain");
 
-            var res = true;
+            var res = false;
 
             while (ChainCommands.Count > 0)
             {
-                if (!ControllerDevice.Write(ChainCommands.Peek()))
+                res = false;
+                var c = ChainCommands.Peek();
+                if (c is StandardCommand)
                 {
-                    res = false;
-                    break;
+                    if (await WriteCommand((StandardCommand)c)) res = true;
+                    else break;
+                    
                 }
-                else ChainCommands.Dequeue();
+                if (c is ReqResCommand)
+                {
+                    if (!await WriteCommand((ReqResCommand)c)) res = true;
+                    else break;
+                }
+                ChainCommands.Dequeue();
             }
             if (ChainState == ChainState.ChainAuto) SetChain(ChainState.Single);
             ChainCommands.Clear();
