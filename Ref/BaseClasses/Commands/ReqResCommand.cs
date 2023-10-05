@@ -10,23 +10,13 @@ namespace Ref.BaseClasses.Commands
     {
         public string Response { get; set; } = string.Empty;
         public int Timeout { get; set; }
-        public ReqResCommand(string Command) : base(Command)
+        public ReqResCommand(string Command, string Response, int Timeout = 100) : base(Command)
         {
-
+            this.Response = Response;
+            this.Timeout = Timeout;
         }
 
 
-    }
-    public class ReqResFailCallbackCommand : CommandBase
-    {
-        public string Response { get; set; } = string.Empty;
-        public string FailResponse { get; set; } = string.Empty;
-
-
-        public int Timeout { get; set; }
-        public ReqResFailCallbackCommand(string Command) : base(Command)
-        {
-        }
     }
 
 }

@@ -31,18 +31,18 @@ namespace Ref.Helpers
             var prts = GetPortList();
             var success = false;
 
-            Console.WriteLine($"--ports count = {prts.Count}--");
-            Console.WriteLine();
+            //Console.WriteLine($"--ports count = {prts.Count}--");
+            //Console.WriteLine();
 
             foreach (var i in prts)
             {
                 if (!success)
                 {
-                    Console.WriteLine($"current port: {i.PortName}");
+                    //Console.WriteLine($"current port: {i.PortName}");
                     i.BaudRate = BaudRate;
                     d.SetPort(i);
-                    Console.WriteLine($"device: port {i.PortName} set. <{d.port.PortName}>");
-                    Console.WriteLine();
+                    //Console.WriteLine($"device: port {i.PortName} set. <{d.port.PortName}>");
+                    //Console.WriteLine();
                     if (d.Connect())
                     {
                         bool Accept = false;
@@ -51,19 +51,19 @@ namespace Ref.Helpers
                         d.port?.DiscardOutBuffer();
                         while (AttemptCount > 0 && !Accept)
                         {
-                            Console.WriteLine($"Attempts: {AttemptCount}, check.");
+                            //Console.WriteLine($"Attempts: {AttemptCount}, check.");
                             if (Check())
                             {
-                                Console.WriteLine($"+Check Accepted+");
+                                //Console.WriteLine($"+Check Accepted+");
                                 Accept = true;
                                 success = true;
                             }
                             else
                             {
-                                Console.WriteLine($"-Check faulted-");
+                                //Console.WriteLine($"-Check faulted-");
                                 AttemptCount--;
                             }
-                            Console.WriteLine();
+                            //Console.WriteLine();
                         }
                         d.Disconnect();
 
@@ -82,13 +82,13 @@ namespace Ref.Helpers
                 var r = false;
                 try
                 {
-                    Console.WriteLine($"<Check> -> Writing [{reqest}]");
+                    //Console.WriteLine($"<Check> -> Writing [{reqest}]");
 
                     if (d.Write(reqest))
                     {
                         Thread.Sleep(50);
                         var s = d.Read().Replace('\r', ' ').Replace('\n', ' ').Trim();
-                        Console.WriteLine($"<Check> Reading <- [{s}]");
+                        //Console.WriteLine($"<Check> Reading <- [{s}]");
                         if (s.Contains(responce)) r = true;
 
                     }

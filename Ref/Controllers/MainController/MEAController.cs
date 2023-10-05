@@ -14,18 +14,32 @@ namespace Ref.Controllers.MainController
         public MEAController() : base()
         {
             OnDataReceivedAction = OnData;
+            ControllerDevice.SetReadMode(Interfaces.DeviceReadMode.Existing);
         }
 
         //example
-        void PowerOnOff()
+        public void ReadTrial()
         {
+            var command = new ReqResCommand("#ReadTrial", "Trial version");
+            WriteCommand(command).Wait();
+        }
 
+        public void SpeedFast()
+        {
+            var command = new ReqResCommand("#SPEED_FAST", "Speed_fast");
+            WriteCommand(command).Wait();
+        }
+
+        public void SetModuleBurn()
+        {
+            var command = new StandardCommand("#BURN:START,MANUAL;");
+            WriteCommand(command);
         }
 
         private void OnData(ControllerData data)
         {
             var d = new MEAControllerData(data.Message);
-            Console.WriteLine(d.Message);
+            //Console.WriteLine(d.Message);
         }
     }
 

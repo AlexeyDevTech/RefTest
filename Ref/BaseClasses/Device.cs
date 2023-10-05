@@ -142,15 +142,25 @@ namespace Ref.BaseClasses
         public void SetReadMode(DeviceReadMode mode) => ReadMode = mode;
         private void Port_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            var message = string.Empty;
-            if (port != null && port.BytesToRead > 0)
+            try
             {
-                if (ReadMode == DeviceReadMode.Existing)
-                    message = port.ReadExisting();
-                if (ReadMode == DeviceReadMode.Line)
-                    message = port.ReadLine();
+                var message = string.Empty;
+                if (port != null && port.BytesToRead > 0)
+                {
+                    if (ReadMode == DeviceReadMode.Existing)
+                        message = port.ReadExisting();
+                    if (ReadMode == DeviceReadMode.Line)
+                        message = port.ReadLine();
 
-                DataReceivedAction?.Invoke(message);
+                    DataReceivedAction?.Invoke(message);
+
+                    //Console.WriteLine($"==========|{message.Trim()}|==========");
+                }
+
+            }
+            catch
+            {
+
             }
         }
 

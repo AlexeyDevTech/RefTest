@@ -12,6 +12,7 @@ namespace Ref.BaseClasses
         public IBaseSerialDevice ControllerDevice { get; private set; } = new Device();
         public Action<ControllerData> OnDataReceivedAction { get; set; }
         public ChainState ChainState { get; private set; }
+        private bool IsExecutingChain;
 
         private Queue<CommandBase> ChainCommands = new();
 
@@ -23,7 +24,7 @@ namespace Ref.BaseClasses
         private void DataReceivedAction(string message)
         {
             var data = new ControllerData() { Message = message };
-            Console.WriteLine(data.Message);
+            //Console.WriteLine(data.Message);
             OnDataReceivedAction?.Invoke(data);
         }
 
@@ -90,7 +91,7 @@ namespace Ref.BaseClasses
         //    }
 
         //}
-        public  Task<bool> WriteCommand(StandardCommand command)
+        public Task<bool> WriteCommand(StandardCommand command)
         {
             return Task.Run(() =>
             {
@@ -118,11 +119,11 @@ namespace Ref.BaseClasses
                 var waitHandle = new ManualResetEvent(false);
 
 
-                if (ChainState == ChainState.Single)
+                if (ChainState == ChainState.Single || command.IsExecuting)
                 {
+                    Console.WriteLine($"Команда на выполнении {command.Command}");
                     ControllerDevice.DataReceivedAction += HandleResponse;
-                    ControllerDevice.Write(command.Command);
-
+                    Console.WriteLine($"Команда отправлена {command.Command} [{ControllerDevice.Write(command.Command)}]");
                     waitHandle.WaitOne(command.Timeout);
 
                     ControllerDevice.DataReceivedAction -= HandleResponse;
@@ -140,6 +141,8 @@ namespace Ref.BaseClasses
                 {
                     if (message.Contains(command.Response))
                     {
+                        Console.WriteLine($"==========|{message.Trim()}|==========");
+
                         r = true;
                         waitHandle.Set();
                     }
@@ -196,21 +199,26 @@ namespace Ref.BaseClasses
             {
                 res = false;
                 var c = ChainCommands.Peek();
+                c.IsExecuting = true;
                 if (c is StandardCommand)
                 {
                     if (await WriteCommand((StandardCommand)c)) res = true;
                     else break;
-                    
                 }
                 if (c is ReqResCommand)
                 {
-                    if (!await WriteCommand((ReqResCommand)c)) res = true;
+                    var a = await WriteCommand((ReqResCommand)c);
+                    if (a) res = true;
                     else break;
                 }
                 ChainCommands.Dequeue();
+
+                Thread.Sleep(150);
+
             }
             if (ChainState == ChainState.ChainAuto) SetChain(ChainState.Single);
             ChainCommands.Clear();
+
             return res;
         }
 

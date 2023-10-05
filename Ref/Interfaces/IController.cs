@@ -1,11 +1,6 @@
 ﻿using Ref.BaseClasses;
 using Ref.BaseClasses.Commands;
 using Ref.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ref.Interfaces
 {
