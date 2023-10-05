@@ -16,12 +16,6 @@ namespace Ref.Controllers.MainController
             OnDataReceivedAction = OnData;
         }
 
-        //example
-        void PowerOnOff()
-        {
-
-        }
-
         private void OnData(ControllerData data)
         {
             var d = new MEAControllerData(data.Message);
@@ -31,7 +25,14 @@ namespace Ref.Controllers.MainController
 
     public interface IMEAController
     {
-
+        bool PowerUp();
+        void PowerDown();
+        bool SetHVMAC();
+        bool SetHVMDC();
+        bool SetBurn();
+        bool SetJoinBurn();
+        bool SetHVBurn();
+        bool SetReflect();
     }
 
 }
