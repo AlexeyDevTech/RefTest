@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ref.BaseClasses.Commands
 {
+    [Serializable]
     public class ReqResCommand : CommandBase
     {
         public string Response { get; set; } = string.Empty;

@@ -168,6 +168,8 @@ namespace RefTest
         public DelegateCommand DisconnectCommand { get; set; }
         public DelegateCommand SendChainCommand { get; set; }
         public DelegateCommand ClearCommand { get; set; }
+        public DelegateCommand<string> SetResistanceCommand { get; set; }
+        public DelegateCommand<string> SetImpulseCommand { get; set; }
 
         private string _COM;
         public string COM
@@ -316,7 +318,19 @@ namespace RefTest
             DisconnectCommand = new DelegateCommand(Disconnect);
             SendChainCommand = new DelegateCommand(SendChain);
             ClearCommand = new DelegateCommand(ClearItems);
+            SetResistanceCommand = new DelegateCommand<string>(SetResistance);
+            SetImpulseCommand = new DelegateCommand<string>(SetImpulse);
             _synchronizationContext = SynchronizationContext.Current;
+        }
+
+        private void SetImpulse(string param)
+        {
+            reflect.SetImpulse(int.Parse(param));
+        }
+
+        private void SetResistance(string param)
+        {
+            reflect.SetResistance(int.Parse(param));
         }
 
         private async void Worker_DoWork(object? sender, DoWorkEventArgs e)
@@ -336,7 +350,7 @@ namespace RefTest
                 reflect.GetState();
                 Thread.Sleep(5);
 
-                await reflect.ExecuteChain(50);
+                await reflect.ExecuteChain(25);
 
                 /*                if(IsChannel1 && IsChannel2 && IsChannel3)
                                 {
@@ -392,11 +406,11 @@ namespace RefTest
             _synchronizationContext.Post((s) => 
             {
 
-                CurrentChannel = data.CurrentChannel;
-                CurrentMode = data.CurrentMode;
-                R = data.R;
-                V = data.V;
-                I = data.I;
+                CurrentChannel = ReflectData.CurrentChannel;
+                CurrentMode = ReflectData.CurrentMode;
+                R = ReflectData.R;
+                V = ReflectData.V;
+                I = ReflectData.I;
 
                 Messages.Add(DateTime.Now.ToString("HH:mm:ss") +" "+data.Message);
             }, null);

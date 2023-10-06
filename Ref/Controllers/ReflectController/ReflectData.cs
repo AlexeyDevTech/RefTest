@@ -10,11 +10,11 @@ namespace Ref.Controllers.ReflectController
     public class ReflectData : ControllerData
     {
         //State: [mode],[channel],[R],[V],[I]
-        public string CurrentMode;
-        public string CurrentChannel;
-        public string R;
-        public string V;
-        public string I;
+        public static string CurrentMode;
+        public static string CurrentChannel;
+        public static string R;
+        public static string V;
+        public static string I;
 
 
         public ReflectData(string message) : base()

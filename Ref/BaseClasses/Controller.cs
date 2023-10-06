@@ -204,7 +204,7 @@ namespace Ref.BaseClasses
 
         public async Task<bool> ExecuteChain(int Delay = 150)
         {
-            if (ChainState == ChainState.Single) throw new Exception("Selected not correct state of chain");
+            if (ChainState == ChainState.Single) return false; /*throw new Exception("Selected not correct state of chain")*/
 
             var res = false;
 
