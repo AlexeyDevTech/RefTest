@@ -18,47 +18,6 @@ namespace Ref.Controllers.ReflectController
         }
     }
 
-
-
-
-    public class ReflectController120 : Controller
-    {
-        public ReflectController120() : base()
-        {
-
-        }
-
-
-    }
-    public class ReflectController90 : Controller, IReflectController
-    {
-
-
-        public void GetState()
-        {
-        }
-
-        public bool SetAmplitude(int vol)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool SetChannel(int channel)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool SetImpulse(int impulse)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool SetMode(int mode)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public class ReflectChannelSettings
     {
 

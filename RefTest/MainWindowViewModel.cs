@@ -1,29 +1,39 @@
-﻿using Prism.Mvvm;
-using Ref;
-using Ref.BaseClasses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Prism.Commands;
+using Prism.Mvvm;
+using System.Diagnostics;
 
 namespace RefTest
 {
     public class MainWindowViewModel : BindableBase
     {
-        private Device _refDevice;
+        public 
 
-        public Device RefDevice
+
+        public DelegateCommand ConnectCommand { get; set; }
+        public DelegateCommand DisconnectCommand { get; set; }
+        private string _COM;
+        public string COM
         {
-            get => _refDevice;
-            set => SetProperty(ref _refDevice, value);
+            get => _COM;
+            set => SetProperty(ref _COM, value);
         }
-
         public MainWindowViewModel()
         {
-            RefDevice = new Device();
+            COM = "COM23";
+            ConnectCommand = new DelegateCommand(Connect);
+            DisconnectCommand = new DelegateCommand(Disconnect);
+
         }
 
+        private void Connect()
+        {
+            Debug.WriteLine("Connected");
+        }
+
+        private void Disconnect()
+        {
+            Debug.WriteLine("Connected");
+        }
 
     }
 }

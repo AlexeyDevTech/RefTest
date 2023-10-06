@@ -6,6 +6,13 @@
         xmlns:local="clr-namespace:RefTest"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1400">
+
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="35"/>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="400"/>
@@ -13,7 +20,7 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="70"/>
+                <RowDefinition Height="100"/>
                 <RowDefinition />
                 <RowDefinition Height="70"/>
             </Grid.RowDefinitions>
@@ -23,33 +30,36 @@
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel>
-                    <Grid Height="26" Margin="5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Height="26" Text="Имя порта: " VerticalAlignment="Center" Padding="0 5"/>
-                        <TextBlock Height="26" Text="{Binding }" VerticalAlignment="Center" Padding="0 5"/>
-                    </Grid>
-                    
-                    <TextBox Height="26" Margin="5" Text="21"/>
+                    <Label Content="COM-Порт" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding COM}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
-                    <Button Height="26" Margin="5" Content="Найти"/>
-                    <Button Height="26" Margin="5" Content="Подключить"/>
+                    <Button Command="{Binding ConnectCommand}" Height="40" Margin="5" Content="Подключить"/>
+                    <Button Command="{Binding DisconnectCommand}" Height="40" Margin="5" Content="Отключить"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
-                
+                <StackPanel>
+                    
+                    <TextBox/>
+                    <TextBox/>
+                    <TextBox/>
+                    <TextBox/>
+                    <TextBox/>
+                    <TextBox/>
+                    <TextBox/>
+                    <TextBox/>
+                    <TextBox/>
+                </StackPanel>
             </Grid>
             <Grid Grid.Row="2">
-                
+                <Button Content="Выполнить очередь команд" FontSize="26" Height="45" Cursor="Hand"/>
             </Grid>
 
 
         </Grid>
         <Grid Grid.Column="1">
-
+            
         </Grid>
     </Grid>
     

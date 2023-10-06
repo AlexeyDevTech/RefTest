@@ -34,11 +34,16 @@ internal class Program
         VC.SetChain(ChainState.ChainAuto);
 
         VC.GetDevice();
+        Thread.Sleep(5);
         VC.GetMode();
+        Thread.Sleep(5);
         VC.GetVoltage();
+        Thread.Sleep(5);
 
         main.SpeedFast();
+        Thread.Sleep(5);
         main.SpeedFast();
+        Thread.Sleep(5);
         main.ReadTrial();
 
         await Console.Out.WriteLineAsync("======Chain started======");
