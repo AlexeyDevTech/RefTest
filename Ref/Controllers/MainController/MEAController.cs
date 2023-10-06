@@ -14,7 +14,6 @@ namespace Ref.Controllers.MainController
         public MEAController() : base()
         {
             OnDataReceivedAction = OnData;
-            ControllerDevice.SetReadMode(Interfaces.DeviceReadMode.Existing);
         }
 
         //example
@@ -45,7 +44,14 @@ namespace Ref.Controllers.MainController
 
     public interface IMEAController
     {
-
+        bool PowerUp();
+        void PowerDown();
+        bool SetHVMAC();
+        bool SetHVMDC();
+        bool SetBurn();
+        bool SetJoinBurn();
+        bool SetHVBurn();
+        bool SetReflect();
     }
 
 }
