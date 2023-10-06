@@ -9,14 +9,32 @@ namespace Ref.Controllers.ReflectController
 {
     public class ReflectData : ControllerData
     {
-
+        //State: [mode],[channel],[R],[V],[I]
+        public string CurrentMode;
+        public string CurrentChannel;
+        public string R;
+        public string V;
+        public string I;
 
 
         public ReflectData(string message) : base()
         {
-            var receivedData = message.Trim('\r', '\n').Trim();
+            var data = message.Trim('\r', '\n').Trim();
 
-            Message = receivedData;
+            if (data.Contains("State:"))
+            {
+                var values = data.Split(':')[1].Split(',');
+                CurrentMode = values[0];
+                CurrentChannel = values[1].Trim();
+                R = values[2];
+                V = values[3];
+                I = values[4];
+
+
+
+            }
+
+            Message = data;
         }
     }
 }

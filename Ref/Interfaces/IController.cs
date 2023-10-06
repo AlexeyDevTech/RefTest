@@ -15,7 +15,7 @@ namespace Ref.Interfaces
         Task<bool> WriteCommand(StandardCommand command);
         Task<bool> WriteCommand(ReqResCommand command);
         void SetChain(ChainState c_state);
-        Task<bool> ExecuteChain();
+        Task<bool> ExecuteChain(int Delay = 150);
 
         Action<ControllerData> OnDataReceivedAction { get; set; }
     }

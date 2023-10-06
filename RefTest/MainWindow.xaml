@@ -76,6 +76,11 @@
                         <ComboBox ItemsSource="{Binding AllCommands}" SelectedItem="{Binding Command9}" Width="350"/>
                         <TextBox  Text="{Binding CommandParameter9}"/>
                     </DockPanel>
+
+                    <StackPanel Margin="0 30 0 0">
+                        <ComboBox ItemsSource="{Binding TypesOfCommand}" SelectedItem="{Binding SelectedTypeCommand}">
+                        </ComboBox>
+                    </StackPanel>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="2">
@@ -86,10 +91,41 @@
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="415"/>
+                <RowDefinition Height="205"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
+            <Grid Grid.Row="0">
+                <StackPanel>
+                    <Grid Height="160">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            <StackPanel>
+                            <TextBlock Text="{Binding CurrentMode, StringFormat=Mode - {0}}" FontSize="20"/>
+                            <TextBlock Text="{Binding CurrentChannel, StringFormat=Channel - {0}}" FontSize="20"/>
+                            <TextBlock Text="{Binding R, StringFormat=R - {0}}" FontSize="20"/>
+                            <TextBlock Text="{Binding V, StringFormat=V - {0}}" FontSize="20"/>
+                            <TextBlock Text="{Binding I, StringFormat=I - {0}}" FontSize="20"/>
+                            <ToggleButton IsChecked="{Binding IsRunChannels}" Height="20" Margin="5" Width="485" HorizontalAlignment="Left" Content="Запустить смену каналов" Cursor="Hand"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <StackPanel>
+                                <ToggleButton IsChecked="{Binding IsChannel1}" Height="40" Margin="5" Content="Channel 1" FontSize="24"/>
+                                <ToggleButton IsChecked="{Binding IsChannel2}" Height="40" Margin="5" Content="Channel 2" FontSize="24"/>
+                                <ToggleButton IsChecked="{Binding IsChannel3}" Height="40" Margin="5" Content="Channel 3" FontSize="24"/>
+                            </StackPanel>
+                        </Grid>
+                        
+                    </Grid>
+                </StackPanel>
+            </Grid>
+
+            <Button VerticalAlignment="Bottom" Height="40" Command="{Binding ClearCommand}" Content="Очистить" FontSize="24"/>
             <ListView ItemsSource="{Binding Messages}" Grid.Row="1">
                 <ListView.ItemTemplate>
                     <DataTemplate>

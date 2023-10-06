@@ -146,10 +146,15 @@ namespace Ref.BaseClasses
                 {
                     if (message.Contains(command.Response))
                     {
-                        Debug.WriteLine($"==========|{message.Trim()}|==========");
+                        Debug.WriteLine($"[{command.Command}] - [{message.Trim()}]");
+                        //Debug.WriteLine($"==========|{message.Trim()}|==========");
 
                         r = true;
                         waitHandle.Set();
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"???[{command.Command}] - [{message.Trim()}]???");
                     }
                 }
             });
@@ -194,9 +199,10 @@ namespace Ref.BaseClasses
         public void SetChain(ChainState c_state)
         {
             ChainState = c_state;
+            Debug.WriteLine($"Chain state: [{ChainState}]");
         }
 
-        public async Task<bool> ExecuteChain()
+        public async Task<bool> ExecuteChain(int Delay = 150)
         {
             if (ChainState == ChainState.Single) throw new Exception("Selected not correct state of chain");
 
@@ -220,7 +226,7 @@ namespace Ref.BaseClasses
                 }
                 ChainCommands.Dequeue();
 
-                Thread.Sleep(150);
+                Thread.Sleep(Delay);
 
             }
             if (ChainState == ChainState.ChainAuto) SetChain(ChainState.Single);
