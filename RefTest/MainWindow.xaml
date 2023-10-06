@@ -8,7 +8,7 @@
         Title="MainWindow" Height="600" Width="1400">
 
     <Window.Resources>
-        <Style TargetType="TextBox">
+        <Style TargetType="ComboBox">
             <Setter Property="Height" Value="35"/>
         </Style>
     </Window.Resources>
@@ -40,25 +40,63 @@
             </Grid>
             <Grid Grid.Row="1">
                 <StackPanel>
-                    
-                    <TextBox/>
-                    <TextBox/>
-                    <TextBox/>
-                    <TextBox/>
-                    <TextBox/>
-                    <TextBox/>
-                    <TextBox/>
-                    <TextBox/>
-                    <TextBox/>
+                    <DockPanel>
+                        <ComboBox ItemsSource="{Binding AllCommands}" SelectedItem="{Binding Command1}" Width="350"/>
+                        <TextBox  Text="{Binding CommandParameter1}"/>
+                    </DockPanel>
+                    <DockPanel>
+                        <ComboBox ItemsSource="{Binding AllCommands}" SelectedItem="{Binding Command2}" Width="350"/>
+                        <TextBox  Text="{Binding CommandParameter2}"/>
+                    </DockPanel>
+                    <DockPanel>
+                        <ComboBox ItemsSource="{Binding AllCommands}" SelectedItem="{Binding Command3}" Width="350"/>
+                        <TextBox  Text="{Binding CommandParameter3}"/>
+                    </DockPanel>
+                    <DockPanel>
+                        <ComboBox ItemsSource="{Binding AllCommands}" SelectedItem="{Binding Command4}" Width="350"/>
+                        <TextBox  Text="{Binding CommandParameter4}"/>
+                    </DockPanel>
+                    <DockPanel>
+                        <ComboBox ItemsSource="{Binding AllCommands}" SelectedItem="{Binding Command5}" Width="350"/>
+                        <TextBox  Text="{Binding CommandParameter5}"/>
+                    </DockPanel>
+                    <DockPanel>
+                        <ComboBox ItemsSource="{Binding AllCommands}" SelectedItem="{Binding Command6}" Width="350"/>
+                        <TextBox  Text="{Binding CommandParameter6}"/>
+                    </DockPanel>
+                    <DockPanel>
+                        <ComboBox ItemsSource="{Binding AllCommands}" SelectedItem="{Binding Command7}" Width="350"/>
+                        <TextBox  Text="{Binding CommandParameter7}"/>
+                    </DockPanel>
+                    <DockPanel>
+                        <ComboBox ItemsSource="{Binding AllCommands}" SelectedItem="{Binding Command8}" Width="350"/>
+                        <TextBox  Text="{Binding CommandParameter8}"/>
+                    </DockPanel>
+                    <DockPanel>
+                        <ComboBox ItemsSource="{Binding AllCommands}" SelectedItem="{Binding Command9}" Width="350"/>
+                        <TextBox  Text="{Binding CommandParameter9}"/>
+                    </DockPanel>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="2">
-                <Button Content="Выполнить очередь команд" FontSize="26" Height="45" Cursor="Hand"/>
+                <Button Command="{Binding SendChainCommand}" Content="Выполнить очередь команд" FontSize="26" Height="45" Cursor="Hand"/>
             </Grid>
 
 
         </Grid>
         <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="415"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <ListView ItemsSource="{Binding Messages}" Grid.Row="1">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock FontSize="12" Text="{Binding}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             
         </Grid>
     </Grid>

@@ -11,6 +11,7 @@ namespace Ref.Controllers.MainController
 {
     public class MEAController : Controller
     {
+        public event Action<MEAControllerData> OnDataRecieved;
         public MEAController() : base()
         {
             OnDataReceivedAction = OnData;
@@ -37,8 +38,7 @@ namespace Ref.Controllers.MainController
 
         private void OnData(ControllerData data)
         {
-            var d = new MEAControllerData(data.Message);
-            //Console.WriteLine(d.Message);
+            OnDataRecieved?.Invoke(new MEAControllerData(data.Message));
         }
     }
 
@@ -52,6 +52,7 @@ namespace Ref.Controllers.MainController
         bool SetJoinBurn();
         bool SetHVBurn();
         bool SetReflect();
+        event Action<MEAControllerData> OnDataRecieved;
     }
 
 }

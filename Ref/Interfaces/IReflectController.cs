@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ref.Controllers.ReflectController;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,10 @@ namespace Ref.Interfaces
         bool SetMode(int mode);
         bool SetImpulse(int impulse);
         bool SetAmplitude(int vol);
-        void GetState();
-
+        bool SetResistance(int resistance);
+        bool SetDelay(int delay);
+        bool SetPulse(int pulse);
+        bool GetState();
+        event Action<ReflectData> OnDataRecieved;
     }
 }

@@ -11,7 +11,7 @@ namespace Ref.Interfaces
         IBaseSerialDevice ControllerDevice { get; }
         ChainState ChainState { get; }
         bool Start();
-        void Stop();
+        bool Stop();
         Task<bool> WriteCommand(StandardCommand command);
         Task<bool> WriteCommand(ReqResCommand command);
         void SetChain(ChainState c_state);
