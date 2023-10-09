@@ -6,9 +6,6 @@ namespace RefTest
 {
     public class MainWindowViewModel : BindableBase
     {
-        public 
-
-
         public DelegateCommand ConnectCommand { get; set; }
         public DelegateCommand DisconnectCommand { get; set; }
         private string _COM;
