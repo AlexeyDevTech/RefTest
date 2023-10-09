@@ -1,4 +1,5 @@
-﻿using System.IO.Ports;
+﻿using System.Diagnostics;
+using System.IO.Ports;
 using Ref.BaseClasses;
 
 namespace Ref.Helpers
@@ -31,18 +32,18 @@ namespace Ref.Helpers
             var prts = GetPortList();
             var success = false;
 
-            //Console.WriteLine($"--ports count = {prts.Count}--");
-            //Console.WriteLine();
+            Debug.WriteLine($"--ports count = {prts.Count}--");
+            Debug.WriteLine("");
 
             foreach (var i in prts)
             {
                 if (!success)
                 {
-                    //Console.WriteLine($"current port: {i.PortName}");
+                    Debug.WriteLine($"current port: {i.PortName}");
                     i.BaudRate = BaudRate;
                     d.SetPort(i);
-                    //Console.WriteLine($"device: port {i.PortName} set. <{d.port.PortName}>");
-                    //Console.WriteLine();
+                    Debug.WriteLine($"device: port {i.PortName} set. <{d.port.PortName}>");
+                    Debug.WriteLine("");
                     if (d.Connect())
                     {
                         bool Accept = false;
@@ -51,19 +52,19 @@ namespace Ref.Helpers
                         d.port?.DiscardOutBuffer();
                         while (AttemptCount > 0 && !Accept)
                         {
-                            //Console.WriteLine($"Attempts: {AttemptCount}, check.");
+                            Debug.WriteLine($"Attempts: {AttemptCount}, check.");
                             if (Check())
                             {
-                                //Console.WriteLine($"+Check Accepted+");
+                                Debug.WriteLine($"+Check Accepted+");
                                 Accept = true;
                                 success = true;
                             }
                             else
                             {
-                                //Console.WriteLine($"-Check faulted-");
+                                Debug.WriteLine($"-Check faulted-");
                                 AttemptCount--;
                             }
-                            //Console.WriteLine();
+                            Debug.WriteLine("");
                         }
                         d.Disconnect();
 
@@ -82,13 +83,13 @@ namespace Ref.Helpers
                 var r = false;
                 try
                 {
-                    //Console.WriteLine($"<Check> -> Writing [{reqest}]");
+                    Debug.WriteLine($"<Check> -> Writing [{reqest}]");
 
                     if (d.Write(reqest))
                     {
                         Thread.Sleep(50);
                         var s = d.Read().Replace('\r', ' ').Replace('\n', ' ').Trim();
-                        //Console.WriteLine($"<Check> Reading <- [{s}]");
+                        Debug.WriteLine($"<Check> Reading <- [{s}]");
                         if (s.Contains(responce)) r = true;
 
                     }

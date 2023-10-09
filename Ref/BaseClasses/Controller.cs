@@ -2,6 +2,7 @@
 using Ref.Enums;
 using Ref.Helpers;
 using Ref.Interfaces;
+using System.Diagnostics;
 
 namespace Ref.BaseClasses
 {
@@ -11,6 +12,7 @@ namespace Ref.BaseClasses
         public ControllerSettings Settings { get; set; } = new();
         public IBaseSerialDevice ControllerDevice { get; private set; } = new Device();
         public Action<ControllerData> OnDataReceivedAction { get; set; }
+        private Action<string> DRACommandHandle { get; set; }
         public ChainState ChainState { get; private set; }
         private bool IsExecutingChain;
 
@@ -24,7 +26,8 @@ namespace Ref.BaseClasses
         private void DataReceivedAction(string message)
         {
             var data = new ControllerData() { Message = message };
-            //Console.WriteLine(data.Message);
+            //Debug.WriteLine(data.Message);
+            DRACommandHandle?.Invoke(data.Message);
             OnDataReceivedAction?.Invoke(data);
         }
 
@@ -121,12 +124,14 @@ namespace Ref.BaseClasses
 
                 if (ChainState == ChainState.Single || command.IsExecuting)
                 {
-                    Console.WriteLine($"Команда на выполнении {command.Command}");
-                    ControllerDevice.DataReceivedAction += HandleResponse;
-                    Console.WriteLine($"Команда отправлена {command.Command} [{ControllerDevice.Write(command.Command)}]");
+                    //Debug.WriteLine($"Команда на выполнении {command.Command}");
+                    DRACommandHandle = HandleResponse;
+                    //Debug.WriteLine($"Команда отправлена {command.Command} [{}]");
+                    ControllerDevice.Write(command.Command);
                     waitHandle.WaitOne(command.Timeout);
 
-                    ControllerDevice.DataReceivedAction -= HandleResponse;
+                    DRACommandHandle = null;
+                    //Debug.WriteLine($"Ожидание завершено [{r}]");
 
                 }
                 else
@@ -141,10 +146,15 @@ namespace Ref.BaseClasses
                 {
                     if (message.Contains(command.Response))
                     {
-                        Console.WriteLine($"==========|{message.Trim()}|==========");
+                        Debug.WriteLine($"[{command.Command}] - [{message.Trim()}]");
+                        //Debug.WriteLine($"==========|{message.Trim()}|==========");
 
                         r = true;
                         waitHandle.Set();
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"???[{command.Command}] - [{message.Trim()}]???");
                     }
                 }
             });
@@ -174,24 +184,27 @@ namespace Ref.BaseClasses
 
         }
 
-        public virtual void Stop()
+        public virtual bool Stop()
         {
-            ControllerDevice.Disconnect();
+            var res = ControllerDevice.Disconnect();
             UnSetDRA();
             ControllerDevice.OnDisconnected -= ControllerDevice_OnDisconnected;
             ControllerDevice.OnConnected -= ControllerDevice_OnConnected;
 
             State = ControllerState.Stopped;
+
+            return res;
         }
 
         public void SetChain(ChainState c_state)
         {
             ChainState = c_state;
+            Debug.WriteLine($"Chain state: [{ChainState}]");
         }
 
-        public async Task<bool> ExecuteChain()
+        public async Task<bool> ExecuteChain(int Delay = 150)
         {
-            if (ChainState == ChainState.Single) throw new Exception("Selected not correct state of chain");
+            if (ChainState == ChainState.Single) return false; /*throw new Exception("Selected not correct state of chain")*/
 
             var res = false;
 
@@ -213,7 +226,7 @@ namespace Ref.BaseClasses
                 }
                 ChainCommands.Dequeue();
 
-                Thread.Sleep(150);
+                Thread.Sleep(Delay);
 
             }
             if (ChainState == ChainState.ChainAuto) SetChain(ChainState.Single);

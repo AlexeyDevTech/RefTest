@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ref.BaseClasses.Commands
 {
+    [Serializable]
     public class StandardCommand : CommandBase
     { 
         public StandardCommand(string Command) : base(Command)

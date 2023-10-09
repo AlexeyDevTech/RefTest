@@ -5,7 +5,7 @@
 
         DeviceReadMode ReadMode { get; }
         bool Connect();
-        void Disconnect();
+        bool Disconnect();
         bool Write(string message);
         string Read();
         string ReadLine();

@@ -46,19 +46,20 @@ namespace Ref.BaseClasses
                 ConnectLogic();
             return true;
         }
-        public void Disconnect()
+        public bool Disconnect()
         {
-            if (port == null) return;
-            if (string.IsNullOrEmpty(port.PortName)) return;
+            if (port == null) return false;
+            if (string.IsNullOrEmpty(port.PortName)) return false;
             try
             {
                 port.Close();
             }
-            catch (Exception) { return; }
+            catch (Exception) { return false; }
             finally
             {
                 DisconnectLogic();
             }
+            return true;
         }
         public bool Write(string message)
         {

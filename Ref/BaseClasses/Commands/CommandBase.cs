@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ref.BaseClasses.Commands
 {
+    [Serializable]
     public abstract class CommandBase
     {
         public bool IsExecuting = false;
