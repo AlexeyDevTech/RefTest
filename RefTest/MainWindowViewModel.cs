@@ -313,7 +313,6 @@ namespace RefTest
 
             reflect.OnDataRecieved += Reflect_OnDataRecieved; ;
 
-            COM = "COM23";
             ConnectCommand = new DelegateCommand(Connect);
             DisconnectCommand = new DelegateCommand(Disconnect);
             SendChainCommand = new DelegateCommand(SendChain);
