@@ -9,21 +9,19 @@ internal class Program
     private static async Task Main(string[] args)
     {
 
-        List<CommandBase> commands = new List<CommandBase>()
-        {
-            new ReqResCommand("#LAB?", "AngstremLabController"),
-            new StandardCommand("#ReadTrial")
-        };
-        
-        var res = JsonConvert.SerializeObject(commands);
+        //List<CommandBase> commands = new List<CommandBase>()
+        //{
+        //    new ReqResCommand("#LAB?", "AngstremLabController"),
+        //    new StandardCommand("#ReadTrial")
+        //};
 
-        await Console.Out.WriteLineAsync(res);
+        //var res = JsonConvert.SerializeObject(commands);
 
-        var r = JsonConvert.DeserializeObject<List<object>>(res);
+        //await Console.Out.WriteLineAsync(res);
 
-        var a = (ReqResCommand)r[0];
-            
+        //var r = JsonConvert.DeserializeObject<List<object>>(res);
 
+        //var a = (ReqResCommand)r[0];
 
         //await Console.Out.WriteLineAsync(r);
         /*var VC = new VoltageSyncroController()
