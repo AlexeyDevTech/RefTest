@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ref", "Ref\Ref.csproj", "{F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RefTest", "RefTest\RefTest.csproj", "{A878F677-B204-4BF4-9DA5-E71CD2AD6740}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ref.Console", "Ref.Console\Ref.Console.csproj", "{1DC8DC64-6C2E-4CF5-A544-9B74B151A403}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ref.Console", "Ref.Console\Ref.Console.csproj", "{1DC8DC64-6C2E-4CF5-A544-9B74B151A403}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ANG24.Core", "ANG24.Core\ANG24.Core.csproj", "{0EC1D2A1-8B6B-4386-BEDE-4C62C8BF914D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{1DC8DC64-6C2E-4CF5-A544-9B74B151A403}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DC8DC64-6C2E-4CF5-A544-9B74B151A403}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DC8DC64-6C2E-4CF5-A544-9B74B151A403}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EC1D2A1-8B6B-4386-BEDE-4C62C8BF914D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EC1D2A1-8B6B-4386-BEDE-4C62C8BF914D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EC1D2A1-8B6B-4386-BEDE-4C62C8BF914D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EC1D2A1-8B6B-4386-BEDE-4C62C8BF914D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
